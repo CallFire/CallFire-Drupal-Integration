@@ -1,0 +1,7 @@
+name = CallFire SDK
+description = Expose the CallFire SDK for custom development
+core = 7.x
+
+configure = admin/config/system/callfire_sdk
+
+files[] = callfire_sdk.test

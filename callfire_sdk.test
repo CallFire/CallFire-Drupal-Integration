@@ -1,0 +1,30 @@
+<?php
+class CallFireSdkTestCase extends DrupalWebTestCase {
+    public static function getInfo() {
+        return array(
+            'name' => 'CallFire SDK module functionality',
+            'description' => 'Tests hooks and the client helper in the CallFire SDK module',
+            'group' => 'CallFire'
+        );
+    }
+    
+    public function setUp() {
+        parent::setUp('callfire_sdk');
+    }
+    
+    public function testRestClientHelper() {
+        $data = module_invoke('callfire_sdk', 'init');
+    
+        $client = callfire_sdk_rest_client('Broadcast');
+        
+        $this->assertTrue($client instanceof CallFire\Api\Rest\AbstractClient);
+    }
+    
+    public function testSoapClientHelper() {
+        $data = module_invoke('callfire_sdk', 'init');
+    
+        $client = callfire_sdk_soap_client('Broadcast');
+        
+        $this->assertTrue($client instanceof CallFire\Api\Soap\AbstractClient);
+    }
+}
