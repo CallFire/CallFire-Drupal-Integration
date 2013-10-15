@@ -1,4 +1,9 @@
 <?php
+/**
+ * Initializes the PSR-0 autoloader for the CallFire SDK and its dependencies
+ *
+ * @return void
+ */
 function callfire_sdk_init() {
     if(!class_exists('SplClassLoader')) {
         require_once(__DIR__.'/vendor/SplClassLoader.php');
@@ -11,6 +16,11 @@ function callfire_sdk_init() {
     $stdlibLoader->register();
 }
 
+/**
+ * Adds the API client configuration menu(s)
+ *
+ * @return array
+ */
 function callfire_sdk_menu() {
     $items = array();
     
@@ -26,6 +36,13 @@ function callfire_sdk_menu() {
     return $items;
 }
 
+/**
+ * API client configuration form
+ *
+ * @param array $form
+ * @param array &$form_state
+ * @return string
+ */
 function callfire_sdk_form_config($form, &$form_state) {
     $form['callfire_sdk_api_login'] = array(
         '#type' => 'textfield',
@@ -50,6 +67,17 @@ function callfire_sdk_form_config($form, &$form_state) {
     return system_settings_form($form);
 }
 
+/**
+ * REST client creation helper
+ * 
+ * Instantiates a REST client of the specified type, using the configured API
+ * credentials, or the specified credentials.
+ *
+ * @param string|array $type
+ * @param string $login = null
+ * @param string $password = null
+ * @return CallFire\Api\Rest\AbstractClient
+ */
 function callfire_sdk_rest_client($type, $login = null, $password = null) {
     if(!$login) {
         $login = variable_get('callfire_sdk_api_login');
@@ -62,6 +90,17 @@ function callfire_sdk_rest_client($type, $login = null, $password = null) {
     return CallFire\Api\Client::Rest($login, $password, $type);
 }
 
+/**
+ * SOAP client creation helper
+ * 
+ * Instantiates a SOAP client of the specified type, using the configured API
+ * credentials, or the specified credentials
+ *
+ * @param string|array $type
+ * @param string $login = null
+ * @param string $password = null
+ * @return CallFire\Api\Soap\AbstractClient
+ */
 function callfire_sdk_soap_client($type, $login = null, $password = null) {
     if(!$login) {
         $login = variable_get('callfire_sdk_api_login');
