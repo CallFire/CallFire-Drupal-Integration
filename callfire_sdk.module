@@ -39,8 +39,11 @@ function callfire_sdk_menu() {
 /**
  * API client configuration form.
  *
- * @param array $form The initial form structure
- * @param array &$form_state The form state
+ * @param array $form
+ *   The initial form structure
+ * @param array &$form_state
+ *   The form state
+ * 
  * @return string Form markup
  */
 function callfire_sdk_form_config($form, &$form_state) {
@@ -73,9 +76,13 @@ function callfire_sdk_form_config($form, &$form_state) {
  * Instantiates a REST client of the specified type, using the configured API
  * credentials, or the specified credentials.
  *
- * @param string|array $type API client type (e.g. 'Broadcast')
- * @param string $login = NULL Optional API login
- * @param string $password = NULL Option API password
+ * @param string|array $type
+ *   API client type (e.g. 'Broadcast')
+ * @param string $login = NULL
+ *   Optional API login
+ * @param string $password = NULL
+ *   Option API password
+ * 
  * @return CallFire\Api\Rest\AbstractClient The API client(s)
  */
 function callfire_sdk_rest_client($type, $login = NULL, $password = NULL) {
@@ -96,9 +103,13 @@ function callfire_sdk_rest_client($type, $login = NULL, $password = NULL) {
  * Instantiates a SOAP client of the specified type, using the configured API
  * credentials, or the specified credentials.
  *
- * @param string|array $type API client type (e.g. 'Broadcast')
- * @param string $login = NULL Optional API login
- * @param string $password = NULL Option API password
+ * @param string|array $type
+ *   API client type (e.g. 'Broadcast')
+ * @param string $login = NULL
+ *   Optional API login
+ * @param string $password = NULL
+ *   Option API password
+ * 
  * @return CallFire\Api\Soap\AbstractClient The API client(s)
  */
 function callfire_sdk_soap_client($type, $login = NULL, $password = NULL) {
