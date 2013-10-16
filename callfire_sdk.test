@@ -13,7 +13,7 @@ class CallFireSdkTestCase extends DrupalWebTestCase {
     }
     
     public function testRestClientHelper() {
-        $data = module_invoke('callfire_sdk', 'init');
+        module_invoke('callfire_sdk', 'init');
     
         $client = callfire_sdk_rest_client('Broadcast');
         
@@ -21,7 +21,7 @@ class CallFireSdkTestCase extends DrupalWebTestCase {
     }
     
     public function testSoapClientHelper() {
-        $data = module_invoke('callfire_sdk', 'init');
+        module_invoke('callfire_sdk', 'init');
     
         $client = callfire_sdk_soap_client('Broadcast');
         
