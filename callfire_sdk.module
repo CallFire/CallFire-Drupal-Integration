@@ -73,6 +73,55 @@ function callfire_sdk_form_config($form, &$form_state) {
 }
 
 /**
+ * Defines the blocks for this module.
+ *
+ * @return array
+ *   The blocks this module exposes
+ */
+function callfire_sdk_block_info() {
+  $blocks = array();
+  
+  if(callfire_sdk_has_viable_credentials()) {
+    $blocks['callfire_sdk_click_to_subscribe'] = array(
+      'info' => t('CallFire Click to Subscribe'),
+      'cache' => DRUPAL_CACHE_PER_ROLE,
+    );
+  }
+  
+  return $blocks;
+}
+
+function callfire_sdk_block_configure($delta = '') {
+  switch($delta) {
+    case 'callfire_sdk_click_to_subscribe':
+      if (!module_load_include('inc', 'callfire_sdk', 'block/click_to_subscribe')) {
+        return FALSE;
+      }
+      return callfire_sdk_block_click_to_subscribe_configure(); 
+  }
+}
+
+function callfire_sdk_block_save($delta = '', $edit = array()) {
+  switch($delta) {
+    case 'callfire_sdk_click_to_subscribe':
+      if (!module_load_include('inc', 'callfire_sdk', 'block/click_to_subscribe')) {
+        return FALSE;
+      }
+      return callfire_sdk_block_click_to_subscribe_save($edit); 
+  }
+}
+
+function callfire_sdk_block_view($delta = '') {
+  switch($delta) {
+    case 'callfire_sdk_click_to_subscribe':
+      if (!user_access('access content') || !module_load_include('inc', 'callfire_sdk', 'block/click_to_subscribe')) {
+        return FALSE;
+      }
+      return callfire_sdk_block_click_to_subscribe_view();
+  }
+}
+
+/**
  * REST client creation helper.
  * 
  * Instantiates a REST client of the specified type, using the configured API
@@ -126,4 +175,17 @@ function callfire_sdk_soap_client($type, $login = NULL, $password = NULL) {
   }
 
   return CallFire\Api\Client::Soap($login, $password, $type);
+}
+
+/**
+ * Determines whether the configured credentials are viable.
+ *
+ * @return boolean
+ *   Whether the configured credentials are viable
+ */
+function callfire_sdk_has_viable_credentials() {
+  $login = variable_get('callfire_sdk_api_login');
+  $password = variable_get('callfire_sdk_api_password');
+  
+  return ((strlen($login) > 0) && (strlen($password) > 0));
 }
