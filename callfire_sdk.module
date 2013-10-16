@@ -5,15 +5,15 @@
  * @return void
  */
 function callfire_sdk_init() {
-    if(!class_exists('SplClassLoader')) {
-        require_once(__DIR__.'/vendor/SplClassLoader.php');
-    }
+  if(!class_exists('SplClassLoader')) {
+    require_once(__DIR__.'/vendor/SplClassLoader.php');
+  }
 
-    $callfireLoader = new SplClassLoader('CallFire', __DIR__.'/vendor/CallFire-PHP-SDK/src');
-    $callfireLoader->register();
+  $callfireLoader = new SplClassLoader('CallFire', __DIR__.'/vendor/CallFire-PHP-SDK/src');
+  $callfireLoader->register();
 
-    $stdlibLoader = new SplClassLoader('Zend\Stdlib', __DIR__.'/vendor');
-    $stdlibLoader->register();
+  $stdlibLoader = new SplClassLoader('Zend\Stdlib', __DIR__.'/vendor');
+  $stdlibLoader->register();
 }
 
 /**
@@ -22,18 +22,18 @@ function callfire_sdk_init() {
  * @return array
  */
 function callfire_sdk_menu() {
-    $items = array();
-    
-    $items['admin/config/services/callfire_sdk'] = array(
-        'title' => 'CallFire',
-        'description' => 'CallFire API configuration',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('callfire_sdk_form_config'),
-        'access arguments' => array('administer site configuration'),
-        'type' => MENU_NORMAL_ITEM
-    );
-    
-    return $items;
+  $items = array();
+  
+  $items['admin/config/services/callfire_sdk'] = array(
+    'title' => 'CallFire',
+    'description' => 'CallFire API configuration',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('callfire_sdk_form_config'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM
+  );
+  
+  return $items;
 }
 
 /**
@@ -44,27 +44,27 @@ function callfire_sdk_menu() {
  * @return string
  */
 function callfire_sdk_form_config($form, &$form_state) {
-    $form['callfire_sdk_api_login'] = array(
-        '#type' => 'textfield',
-        '#title' => t('API login'),
-        '#default_value' => variable_get('callfire_sdk_api_login', ''),
-        '#size' => 12,
-        '#maxlength' => 15,
-        '#description' => '<a href="https://www.callfire.com/ui/manage/access" target="_blank">'.t('Your CallFire API login').'</a>',
-        '#required' => true
-    );
-    
-    $form['callfire_sdk_api_password'] = array(
-        '#type' => 'textfield',
-        '#title' => t('API password'),
-        '#default_value' => variable_get('callfire_sdk_api_password', ''),
-        '#size' => 16,
-        '#maxlength' => 18,
-        '#description' => '<a href="https://www.callfire.com/ui/manage/access" target="_blank">'.t('Your CallFire API password').'</a>',
-        '#required' => true
-    );
-    
-    return system_settings_form($form);
+  $form['callfire_sdk_api_login'] = array(
+    '#type' => 'textfield',
+    '#title' => t('API login'),
+    '#default_value' => variable_get('callfire_sdk_api_login', ''),
+    '#size' => 12,
+    '#maxlength' => 15,
+    '#description' => '<a href="https://www.callfire.com/ui/manage/access" target="_blank">'.t('Your CallFire API login').'</a>',
+    '#required' => true
+  );
+  
+  $form['callfire_sdk_api_password'] = array(
+    '#type' => 'textfield',
+    '#title' => t('API password'),
+    '#default_value' => variable_get('callfire_sdk_api_password', ''),
+    '#size' => 16,
+    '#maxlength' => 18,
+    '#description' => '<a href="https://www.callfire.com/ui/manage/access" target="_blank">'.t('Your CallFire API password').'</a>',
+    '#required' => true
+  );
+  
+  return system_settings_form($form);
 }
 
 /**
@@ -79,15 +79,15 @@ function callfire_sdk_form_config($form, &$form_state) {
  * @return CallFire\Api\Rest\AbstractClient
  */
 function callfire_sdk_rest_client($type, $login = null, $password = null) {
-    if(!$login) {
-        $login = variable_get('callfire_sdk_api_login');
-    }
-    
-    if(!$password) {
-        $password = variable_get('callfire_sdk_api_password');
-    }
+  if(!$login) {
+    $login = variable_get('callfire_sdk_api_login');
+  }
+  
+  if(!$password) {
+    $password = variable_get('callfire_sdk_api_password');
+  }
 
-    return CallFire\Api\Client::Rest($login, $password, $type);
+  return CallFire\Api\Client::Rest($login, $password, $type);
 }
 
 /**
@@ -102,13 +102,13 @@ function callfire_sdk_rest_client($type, $login = null, $password = null) {
  * @return CallFire\Api\Soap\AbstractClient
  */
 function callfire_sdk_soap_client($type, $login = null, $password = null) {
-    if(!$login) {
-        $login = variable_get('callfire_sdk_api_login');
-    }
-    
-    if(!$password) {
-        $password = variable_get('callfire_sdk_api_password');
-    }
+  if(!$login) {
+    $login = variable_get('callfire_sdk_api_login');
+  }
+  
+  if(!$password) {
+    $password = variable_get('callfire_sdk_api_password');
+  }
 
-    return CallFire\Api\Client::Soap($login, $password, $type);
+  return CallFire\Api\Client::Soap($login, $password, $type);
 }
