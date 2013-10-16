@@ -1,30 +1,58 @@
 <?php
+/**
+ * CallFire SDK module functionality.
+ * 
+ * Tests hooks and the client helper in the CallFire SDK module.
+ */
 class CallFireSdkTestCase extends DrupalWebTestCase {
+  /**
+   * Test case information method.
+   *
+   * @static
+   * @return void
+   */
   public static function getInfo() {
     return array(
       'name' => 'CallFire SDK module functionality',
       'description' => 'Tests hooks and the client helper in the CallFire SDK module',
-      'group' => 'CallFire'
+      'group' => 'CallFire',
     );
   }
-  
+
+  /**
+   * Set up the test case as being of the callfire_sdk module.
+   *
+   * @return void
+   */
   public function setUp() {
     parent::setUp('callfire_sdk');
   }
-  
+
+  /**
+   * Test that the REST client can be instantiated from the
+   * callfire_sdk_rest_client helper function.
+   *
+   * @return void
+   */
   public function testRestClientHelper() {
     module_invoke('callfire_sdk', 'init');
-  
+
     $client = callfire_sdk_rest_client('Broadcast');
-    
+
     $this->assertTrue($client instanceof CallFire\Api\Rest\AbstractClient);
   }
-  
+
+  /**
+   * Test that the SOAP client can be instantiated from the
+   * callfire_sdk_soap_client helper function.
+   *
+   * @return void
+   */
   public function testSoapClientHelper() {
     module_invoke('callfire_sdk', 'init');
-  
+
     $client = callfire_sdk_soap_client('Broadcast');
-    
+
     $this->assertTrue($client instanceof CallFire\Api\Soap\AbstractClient);
   }
 }

@@ -19,7 +19,8 @@ function callfire_sdk_init() {
 /**
  * Adds the API client configuration menu(s).
  *
- * @return array Menu content
+ * @return array
+ *   Menu content
  */
 function callfire_sdk_menu() {
   $items = array();
@@ -44,7 +45,8 @@ function callfire_sdk_menu() {
  * @param array &$form_state
  *   The form state
  * 
- * @return string Form markup
+ * @return string
+ *   Form markup
  */
 function callfire_sdk_form_config($form, &$form_state) {
   $form['callfire_sdk_api_login'] = array(
@@ -71,7 +73,7 @@ function callfire_sdk_form_config($form, &$form_state) {
 }
 
 /**
- * REST client creation helper
+ * REST client creation helper.
  * 
  * Instantiates a REST client of the specified type, using the configured API
  * credentials, or the specified credentials.
@@ -83,7 +85,8 @@ function callfire_sdk_form_config($form, &$form_state) {
  * @param string $password = NULL
  *   Option API password
  * 
- * @return CallFire\Api\Rest\AbstractClient The API client(s)
+ * @return CallFire\Api\Rest\AbstractClient
+ *   The API client(s)
  */
 function callfire_sdk_rest_client($type, $login = NULL, $password = NULL) {
   if (!$login) {
@@ -98,7 +101,7 @@ function callfire_sdk_rest_client($type, $login = NULL, $password = NULL) {
 }
 
 /**
- * SOAP client creation helper
+ * SOAP client creation helper.
  * 
  * Instantiates a SOAP client of the specified type, using the configured API
  * credentials, or the specified credentials.
@@ -110,7 +113,8 @@ function callfire_sdk_rest_client($type, $login = NULL, $password = NULL) {
  * @param string $password = NULL
  *   Option API password
  * 
- * @return CallFire\Api\Soap\AbstractClient The API client(s)
+ * @return CallFire\Api\Soap\AbstractClient
+ *   The API client(s)
  */
 function callfire_sdk_soap_client($type, $login = NULL, $password = NULL) {
   if (!$login) {
