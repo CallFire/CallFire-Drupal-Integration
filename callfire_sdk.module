@@ -1,47 +1,47 @@
 <?php
 /**
- * Initializes the PSR-0 autoloader for the CallFire SDK and its dependencies
+ * Initializes the PSR-0 autoloader for the CallFire SDK and its dependencies.
  *
  * @return void
  */
 function callfire_sdk_init() {
-  if(!class_exists('SplClassLoader')) {
-    require_once(__DIR__.'/vendor/SplClassLoader.php');
+  if (!class_exists('SplClassLoader')) {
+    require_once __DIR__ . '/vendor/SplClassLoader.php';
   }
 
-  $callfireLoader = new SplClassLoader('CallFire', __DIR__.'/vendor/CallFire-PHP-SDK/src');
-  $callfireLoader->register();
+  $callfire_loader = new SplClassLoader('CallFire', __DIR__ . '/vendor/CallFire-PHP-SDK/src');
+  $callfire_loader->register();
 
-  $stdlibLoader = new SplClassLoader('Zend\Stdlib', __DIR__.'/vendor');
-  $stdlibLoader->register();
+  $stdlib_loader = new SplClassLoader('Zend\Stdlib', __DIR__ . '/vendor');
+  $stdlib_loader->register();
 }
 
 /**
- * Adds the API client configuration menu(s)
+ * Adds the API client configuration menu(s).
  *
- * @return array
+ * @return array Menu content
  */
 function callfire_sdk_menu() {
   $items = array();
-  
+
   $items['admin/config/services/callfire_sdk'] = array(
     'title' => 'CallFire',
     'description' => 'CallFire API configuration',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('callfire_sdk_form_config'),
     'access arguments' => array('administer site configuration'),
-    'type' => MENU_NORMAL_ITEM
+    'type' => MENU_NORMAL_ITEM,
   );
-  
+
   return $items;
 }
 
 /**
- * API client configuration form
+ * API client configuration form.
  *
- * @param array $form
- * @param array &$form_state
- * @return string
+ * @param array $form The initial form structure
+ * @param array &$form_state The form state
+ * @return string Form markup
  */
 function callfire_sdk_form_config($form, &$form_state) {
   $form['callfire_sdk_api_login'] = array(
@@ -50,20 +50,20 @@ function callfire_sdk_form_config($form, &$form_state) {
     '#default_value' => variable_get('callfire_sdk_api_login', ''),
     '#size' => 12,
     '#maxlength' => 15,
-    '#description' => '<a href="https://www.callfire.com/ui/manage/access" target="_blank">'.t('Your CallFire API login').'</a>',
-    '#required' => true
+    '#description' => '<a href="https://www.callfire.com/ui/manage/access" target="_blank">' . t('Your CallFire API login') . '</a>',
+    '#required' => TRUE,
   );
-  
+
   $form['callfire_sdk_api_password'] = array(
     '#type' => 'textfield',
     '#title' => t('API password'),
     '#default_value' => variable_get('callfire_sdk_api_password', ''),
     '#size' => 16,
     '#maxlength' => 18,
-    '#description' => '<a href="https://www.callfire.com/ui/manage/access" target="_blank">'.t('Your CallFire API password').'</a>',
-    '#required' => true
+    '#description' => '<a href="https://www.callfire.com/ui/manage/access" target="_blank">' . t('Your CallFire API password') . '</a>',
+    '#required' => TRUE,
   );
-  
+
   return system_settings_form($form);
 }
 
@@ -73,17 +73,17 @@ function callfire_sdk_form_config($form, &$form_state) {
  * Instantiates a REST client of the specified type, using the configured API
  * credentials, or the specified credentials.
  *
- * @param string|array $type
- * @param string $login = null
- * @param string $password = null
- * @return CallFire\Api\Rest\AbstractClient
+ * @param string|array $type API client type (e.g. 'Broadcast')
+ * @param string $login = NULL Optional API login
+ * @param string $password = NULL Option API password
+ * @return CallFire\Api\Rest\AbstractClient The API client(s)
  */
-function callfire_sdk_rest_client($type, $login = null, $password = null) {
-  if(!$login) {
+function callfire_sdk_rest_client($type, $login = NULL, $password = NULL) {
+  if (!$login) {
     $login = variable_get('callfire_sdk_api_login');
   }
-  
-  if(!$password) {
+
+  if (!$password) {
     $password = variable_get('callfire_sdk_api_password');
   }
 
@@ -94,19 +94,19 @@ function callfire_sdk_rest_client($type, $login = null, $password = null) {
  * SOAP client creation helper
  * 
  * Instantiates a SOAP client of the specified type, using the configured API
- * credentials, or the specified credentials
+ * credentials, or the specified credentials.
  *
- * @param string|array $type
- * @param string $login = null
- * @param string $password = null
- * @return CallFire\Api\Soap\AbstractClient
+ * @param string|array $type API client type (e.g. 'Broadcast')
+ * @param string $login = NULL Optional API login
+ * @param string $password = NULL Option API password
+ * @return CallFire\Api\Soap\AbstractClient The API client(s)
  */
-function callfire_sdk_soap_client($type, $login = null, $password = null) {
-  if(!$login) {
+function callfire_sdk_soap_client($type, $login = NULL, $password = NULL) {
+  if (!$login) {
     $login = variable_get('callfire_sdk_api_login');
   }
-  
-  if(!$password) {
+
+  if (!$password) {
     $password = variable_get('callfire_sdk_api_password');
   }
 
